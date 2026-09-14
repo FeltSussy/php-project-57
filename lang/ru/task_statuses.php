@@ -1,0 +1,15 @@
+<?php
+
+return [
+    'title' => 'Статусы',
+    'create_status' => 'Создать статус',
+    'edit_status' => 'Изменить статус',
+    'name' => 'Имя',
+    'create' => 'Создать',
+    'save' => 'Сохранить',
+    'creation_date' => 'Дата создания',
+    'actions' => 'Действия',
+    'delete' => 'Удалить',
+    'confirm_delete' => 'Вы уверенны?',
+    'edit' => 'Изменить',
+];

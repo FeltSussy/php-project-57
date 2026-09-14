@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
-        Забыли пароль? Укажите свой email, и мы отправим вам ссылку для создания нового пароля.
+        {{ __('auth.ui.forgot_password_description') }}
     </div>
 
     <!-- Session Status -->
@@ -18,8 +18,10 @@
 
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>
-                Отправить ссылку
+                {{ __('auth.ui.send_link') }}
             </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
+
+

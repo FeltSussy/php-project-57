@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
-        Это защищённая часть приложения. Подтвердите пароль, чтобы продолжить.
+        {{ __('auth.ui.secure_area') }}
     </div>
 
     <form method="POST" action="{{ route('password.confirm') }}">
@@ -8,7 +8,7 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" value="Пароль" />
+            <x-input-label for="password" :value="__('auth.ui.password')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -20,8 +20,10 @@
 
         <div class="flex justify-end mt-4">
             <x-primary-button>
-                Подтвердить
+                {{ __('auth.ui.confirm') }}
             </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
+
+

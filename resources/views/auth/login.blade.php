@@ -5,13 +5,13 @@
         @csrf
 
         <div>
-            <x-input-label for="email" value="Email" />
+            <x-input-label for="email" :value="__('auth.ui.email')" />
             <x-text-input id="email" class="mt-1 block w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <div class="mt-4">
-            <x-input-label for="password" value="Пароль" />
+            <x-input-label for="password" :value="__('auth.ui.password')" />
             <x-text-input id="password" class="mt-1 block w-full" type="password" name="password" required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -19,18 +19,19 @@
         <div class="mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-blue-500 shadow-sm focus:ring-blue-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">Запомнить меня</span>
+                <span class="ms-2 text-sm text-gray-600">{{ __('auth.ui.remember_me') }}</span>
             </label>
         </div>
 
         <div class="mt-5 flex items-center justify-end">
             @if (Route::has('password.request'))
                 <a class="text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" href="{{ route('password.request') }}">
-                    Забыли пароль?
+                    {{ __('auth.ui.forgot_password') }}
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">Войти</x-primary-button>
+            <x-primary-button class="ms-3">{{ __('auth.ui.login') }}</x-primary-button>
         </div>
     </form>
 </x-guest-layout>
+

@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
-        Спасибо за регистрацию! Подтвердите адрес электронной почты, перейдя по ссылке из отправленного письма. Если письмо не пришло, мы можем отправить его ещё раз.
+        {{ __('auth.ui.registration_thanks') }}
     </div>
 
     @if (session('status') == 'verification-link-sent')
         <div class="mb-4 text-sm font-medium text-green-600">
-            Новая ссылка для подтверждения отправлена на указанный вами email.
+            {{ __('auth.ui.registration_verification_sent') }}
         </div>
     @endif
 
@@ -15,7 +15,7 @@
 
             <div>
                 <x-primary-button>
-                    Отправить письмо повторно
+                    {{ __('auth.ui.resend_verification') }}
                 </x-primary-button>
             </div>
         </form>
@@ -24,8 +24,10 @@
             @csrf
 
             <button type="submit" class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                Выйти
+                {{ __('auth.ui.logout') }}
             </button>
         </form>
     </div>
 </x-guest-layout>
+
+

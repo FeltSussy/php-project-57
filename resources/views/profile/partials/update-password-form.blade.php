@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            Изменение пароля
+            {{ __('profile.update_password') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            Используйте длинный случайный пароль, чтобы защитить учётную запись.
+            {{ __('profile.secure_password') }}
         </p>
     </header>
 
@@ -14,25 +14,25 @@
         @method('put')
 
         <div>
-            <x-input-label for="update_password_current_password" value="Текущий пароль" />
+            <x-input-label for="update_password_current_password" :value="__('profile.current_password')" />
             <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password" value="Новый пароль" />
+            <x-input-label for="update_password_password" :value="__('profile.new_password')" />
             <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password_confirmation" value="Подтверждение пароля" />
+            <x-input-label for="update_password_password_confirmation" :value="__('profile.password_confirmation')" />
             <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>Сохранить</x-primary-button>
+            <x-primary-button>{{ __('profile.save') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p
@@ -41,7 +41,7 @@
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600"
-                >Сохранено.</p>
+                >{{ __('profile.saved') }}</p>
             @endif
         </div>
     </form>
