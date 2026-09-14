@@ -15,12 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(
-        at: '*',
-        headers: SymfonyRequest::HEADER_X_FORWARDED_FOR
-            | SymfonyRequest::HEADER_X_FORWARDED_HOST
-            | SymfonyRequest::HEADER_X_FORWARDED_PORT
-            | SymfonyRequest::HEADER_X_FORWARDED_PROTO,
-    );
+            at: '*',
+            headers: SymfonyRequest::HEADER_X_FORWARDED_FOR
+                | SymfonyRequest::HEADER_X_FORWARDED_HOST
+                | SymfonyRequest::HEADER_X_FORWARDED_PORT
+                | SymfonyRequest::HEADER_X_FORWARDED_PROTO,
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         Integration::handles($exceptions);

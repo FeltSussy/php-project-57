@@ -43,3 +43,6 @@ jobs:
 
       - name: Laravel setup
         run: make setup
+
+      - name: Linter
+        run: make lint

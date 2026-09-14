@@ -5,3 +5,6 @@ setup:
 	php artisan migrate
 	npm install
 	npm run build
+
+lint:
+	./vendor/bin/pint
