@@ -44,3 +44,6 @@ jobs:
 
       - name: Linter
         run: make lint
+
+      - name: Feature tests
+        run: php artisan test

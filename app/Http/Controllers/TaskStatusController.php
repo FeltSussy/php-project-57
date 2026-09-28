@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {
@@ -22,6 +23,8 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', TaskStatus::class);
+
         $taskStatus = new TaskStatus;
 
         return view('task-status.create', compact('taskStatus'));
@@ -32,6 +35,8 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', TaskStatus::class);
+
         $data = $request->validate([
             'name' => 'required|unique:task_statuses|max:20',
         ]);
@@ -41,7 +46,7 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
-        flash('Статус успешно создан')->success();
+        flash(__('task_statuses.created'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -49,8 +54,10 @@ class TaskStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TaskStatus $taskStatus)
+    public function edit(Request $request, TaskStatus $taskStatus)
     {
+        Gate::authorize('update', $taskStatus);
+
         return view('task-status.edit', compact('taskStatus'));
     }
 
@@ -59,6 +66,8 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
+        Gate::authorize('update', $taskStatus);
+
         $data = $request->validate([
             'name' => "required|unique:task_statuses,name,{$taskStatus->id}|max:20",
         ]);
@@ -66,7 +75,7 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
-        flash('Статус успешно изменен')->success();
+        flash(__('task_statuses.updated'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -76,7 +85,15 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $taskStatus->delete();
+        Gate::authorize('delete', $taskStatus);
+
+        $isAssigned = $taskStatus->tasks()->exists();
+
+        if (! $isAssigned) {
+            $taskStatus->delete();
+        } else {
+            flash(__('task_statuses.cannot_delete'))->error();
+        }
 
         return redirect()->route('task_statuses.index');
     }

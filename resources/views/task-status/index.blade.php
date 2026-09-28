@@ -5,12 +5,14 @@
         </h2>
     </x-slot>
     <div class="mx-auto max-w-7xl px-6">
+        @can('create', App\Models\TaskStatus::class)
         <a
         href="{{ route('task_statuses.create') }}"
         class="mb-4 inline-block rounded bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
         >
             {{ __('task_statuses.create_status') }}
         </a>
+        @endcan
         <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
             <table class="w-full">
                 <thead class="bg-gray-50">
@@ -50,6 +52,7 @@
 
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex gap-4">
+                                    @can('delete', $status)
                                     <form
                                         method="POST"
                                         action="{{ route('task_statuses.destroy', $status) }}"
@@ -65,12 +68,15 @@
                                             {{ __('task_statuses.delete') }}
                                         </button>
                                     </form>
+                                    @endcan
+                                    @can('update', $status)
                                     <a
                                         href="{{ route('task_statuses.edit', $status) }}"
                                         class="text-blue-500 hover:text-blue-700"
                                     >
                                         {{ __('task_statuses.edit') }}
                                     </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

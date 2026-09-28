@@ -188,6 +188,7 @@ return [
         'password' => 'пароль',
         'password_confirmation' => 'подтверждение пароля',
         'current_password' => 'текущий пароль',
+        'status_id' => 'статус',
     ],
 
 ];

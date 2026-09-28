@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['name'])]
 class TaskStatus extends Model
 {
-    //
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'status_id');
+    }
 }

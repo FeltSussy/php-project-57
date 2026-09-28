@@ -12,4 +12,7 @@ return [
     'delete' => 'Delete',
     'confirm_delete' => 'Are you sure?',
     'edit' => 'Edit',
+    'updated' => 'Status changed successfully',
+    'created' => 'Status created successfully',
+    'cannot_delete' => 'Failed to delete the status',
 ];
