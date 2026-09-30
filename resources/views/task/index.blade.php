@@ -67,7 +67,7 @@
                 @foreach ($labels as $label)
                     <option
                         value="{{ $label->id }}"
-                        @selected(request('filter')['labels.id'] == $label->id)
+                        @selected(request('filter')['labels.id'] ?? null == $label->id)
                     >
                         {{ $label->name }}
                     </option>
