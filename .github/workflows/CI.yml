@@ -26,5 +26,8 @@ jobs:
       - name: Linter
         run: make lint
 
+      - name: Seeding
+        run: php artisan db:seed
+
       - name: Feature tests
         run: php artisan test
