@@ -33,6 +33,6 @@ Install PHP dependencies:
 
 ```bash
 make setup
-
+```
 
 Demo: https://php-project-57-6dir.onrender.com/
