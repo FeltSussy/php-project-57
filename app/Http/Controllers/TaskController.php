@@ -9,19 +9,36 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::paginate();
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters(
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+                AllowedFilter::exact('labels.id'),
+            )
+            ->paginate()
+            ->withQueryString();
+
         $taskStatuses = TaskStatus::all();
         $users = User::all();
+        $labels = Label::all();
 
-        return view('task.index', ['tasks' => $tasks, 'taskStatuses' => $taskStatuses, 'users' => $users]);
+        return view('task.index', [
+            'tasks' => $tasks,
+            'taskStatuses' => $taskStatuses,
+            'users' => $users,
+            'labels' => $labels,
+        ]);
     }
 
     /**
@@ -60,13 +77,14 @@ class TaskController extends Controller
 
         $task = new Task;
         $creatorId = Auth::id();
-        $labels = $request->input('labels');
-
-        $task->fill($data);
         $task->created_by_id = $creatorId;
 
+        $task->fill($data);
         $task->save();
-        $task->labels()->sync($labels);
+
+        if ($labels = $request->input('labels')) {
+            $task->labels()->sync($labels);
+        }
 
         flash(__('tasks.created'))->success();
 

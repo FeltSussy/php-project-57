@@ -10,27 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_CONNECTION: pgsql
-      DB_HOST: 127.0.0.1
-      DB_PORT: 5432
-      DB_DATABASE: testdb
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
+      DB_CONNECTION: sqlite
 
-    services:
-      postgres:
-        image: postgres:17
-        env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
     steps:
       - uses: actions/checkout@v6
 

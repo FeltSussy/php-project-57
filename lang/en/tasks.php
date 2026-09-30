@@ -14,6 +14,7 @@ return [
     'edit' => 'Edit',
     'description' => 'Description',
     'labels' => 'Labels',
+    'label' => 'Label',
     'create_button' => 'Create',
     'created' => 'Task created successfully',
     'show' => 'View task',
@@ -21,4 +22,5 @@ return [
     'save' => 'Save',
     'delete' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this task?',
+    'reset' => 'Reset',
 ];
