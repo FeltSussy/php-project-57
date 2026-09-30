@@ -1,5 +1,6 @@
 setup:
 	composer install
+	test -f .env || cp .env.example .env
 	php artisan key:generate
 	php artisan migrate
 	npm install
