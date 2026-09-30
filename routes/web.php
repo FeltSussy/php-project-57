@@ -7,7 +7,7 @@ use App\Http\Controllers\TaskStatusController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return response('OK', 200);
 });
 
 Route::get('/dashboard', function () {
