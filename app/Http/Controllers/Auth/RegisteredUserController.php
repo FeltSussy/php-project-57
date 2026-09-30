@@ -52,6 +52,6 @@ class RegisteredUserController extends Controller
 
         flash('Успешная регистрация!')->success();
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect('/');
     }
 }
