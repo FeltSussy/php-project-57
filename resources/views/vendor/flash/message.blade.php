@@ -5,7 +5,7 @@
         'bg-red-100 text-red-800' => $message['level'] === 'danger',
         'bg-yellow-100 text-yellow-800' => $message['level'] === 'warning',
         'bg-blue-100 text-blue-800' => $message['level'] === 'info',
-    ])>
+    ]) role="alert">
         {{ $message['message'] }}
     </div>
 @endforeach

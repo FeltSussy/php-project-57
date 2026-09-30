@@ -141,6 +141,8 @@ class TaskController extends Controller
 
         $task->labels()->sync($labels);
 
+        flash(__('tasks.updated'))->success();
+
         return redirect()->route('tasks.show', $task);
     }
 
@@ -152,6 +154,8 @@ class TaskController extends Controller
         Gate::authorize('delete', $task);
 
         $task->delete();
+
+        flash(__('tasks.deleted'))->success();
 
         return redirect()->route('tasks.index');
     }

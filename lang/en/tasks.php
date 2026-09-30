@@ -23,4 +23,6 @@ return [
     'delete' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this task?',
     'reset' => 'Reset',
+    'updated' => 'Task changed successfully',
+    'deleted' => 'Task deleted successfully',
 ];

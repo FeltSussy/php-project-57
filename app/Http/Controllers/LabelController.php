@@ -85,6 +85,8 @@ class LabelController extends Controller
         $label->fill($data);
         $label->save();
 
+        flash(__('labels.updated'))->success();
+
         return redirect()->route('labels.show', $label);
     }
 
@@ -99,6 +101,7 @@ class LabelController extends Controller
 
         if (! $isAssigned) {
             $label->delete();
+            flash(__('labels.deleted'))->success();
         } else {
             flash(__('labels.cannot_delete'))->error();
         }

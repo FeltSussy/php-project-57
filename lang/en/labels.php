@@ -18,4 +18,6 @@ return [
     'show' => 'View label',
     'created' => 'Label created successfully',
     'cannot_delete' => 'Failed to delete the label',
+    'deleted' => 'Label deleted successfully',
+    'updated' => 'Label updated successfully',
 ];

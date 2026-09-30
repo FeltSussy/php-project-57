@@ -15,4 +15,9 @@ return [
     'updated' => 'Status changed successfully',
     'created' => 'Status created successfully',
     'cannot_delete' => 'Failed to delete the status',
+    'deleted' => 'Status deleted successfully',
+
+    'validation' => [
+        'name_unique' => 'A status with this name already exists.',
+    ],
 ];

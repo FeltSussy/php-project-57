@@ -5,89 +5,80 @@
             {{ __('tasks.title') }}
         </h1>
 
-        <form
-            method="GET"
-            action="{{ route('tasks.index') }}"
-            class="mb-4 flex items-center gap-2"
+        {{ html()
+            ->form('GET', route('tasks.index'))
+            ->class('mb-4 flex items-center gap-2')
+            ->open()
+        }}
+
+        {{ html()
+            ->select(
+                'filter[status_id]',
+                $taskStatuses->pluck('name', 'id'),
+                request('filter.status_id')
+            )
+            ->placeholder(__('tasks.status'))
+            ->class(
+                'w-40 rounded-md border-gray-300 text-sm shadow-sm ' .
+                'focus:border-blue-500 focus:ring-blue-500'
+            )
+        }}
+
+        {{ html()
+            ->select(
+                'filter[created_by_id]',
+                $users->pluck('name', 'id'),
+                request('filter.created_by_id')
+            )
+            ->placeholder(__('tasks.author'))
+            ->class(
+                'w-64 rounded-md border-gray-300 text-sm shadow-sm ' .
+                'focus:border-blue-500 focus:ring-blue-500'
+            )
+        }}
+
+        {{ html()
+            ->select(
+                'filter[assigned_to_id]',
+                $users->pluck('name', 'id'),
+                request('filter.assigned_to_id')
+            )
+            ->placeholder(__('tasks.assignee'))
+            ->class(
+                'w-64 rounded-md border-gray-300 text-sm shadow-sm ' .
+                'focus:border-blue-500 focus:ring-blue-500'
+            )
+        }}
+
+        {{ html()
+            ->select(
+                'filter[labels.id]',
+                $labels->pluck('name', 'id'),
+                request('filter')['labels.id'] ?? null
+            )
+            ->placeholder(__('tasks.label'))
+            ->class(
+                'w-52 rounded-md border-gray-300 text-sm shadow-sm ' .
+                'focus:border-blue-500 focus:ring-blue-500'
+            )
+        }}
+
+        {{ html()
+            ->submit(__('tasks.apply'))
+            ->class(
+                'rounded bg-blue-500 px-4 py-2 text-sm font-medium ' .
+                'text-white hover:bg-blue-600'
+            )
+        }}
+
+        <a
+            href="{{ route('tasks.index') }}"
+            class="rounded border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
         >
-            <select
-                name="filter[status_id]"
-                class="w-40 rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            >
-                <option value=""> {{ __('tasks.status') }} </option>
+            {{ __('tasks.reset') }}
+        </a>
 
-                @foreach ($taskStatuses as $status)
-                    <option
-                        value="{{ $status->id }}"
-                        @selected(request('filter.status_id') == $status->id)
-                    >
-                        {{ $status->name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <select
-                name="filter[created_by_id]"
-                class="w-64 rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            >
-                <option value="">{{ __('tasks.author') }}</option>
-
-                @foreach ($users as $user)
-                    <option
-                        value="{{ $user->id }}"
-                        @selected(request('filter.created_by_id') == $user->id)
-                    >
-                        {{ $user->name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <select
-                name="filter[assigned_to_id]"
-                class="w-64 rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            >
-                <option value="">{{ __('tasks.assignee') }}</option>
-
-                @foreach ($users as $user)
-                    <option
-                        value="{{ $user->id }}"
-                        @selected(request('filter.assigned_to_id') == $user->id)
-                    >
-                        {{ $user->name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <select
-                name="filter[labels.id]"
-                class="w-52 rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            >
-                <option value="">{{ __('tasks.label') }}</option>
-
-                @foreach ($labels as $label)
-                    <option
-                        value="{{ $label->id }}"
-                        @selected(request('filter')['labels.id'] ?? null == $label->id)
-                    >
-                        {{ $label->name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <button
-                type="submit"
-                class="rounded bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
-            >
-                {{ __('tasks.apply') }}
-            </button>
-
-            <a
-                href="{{ route('tasks.index') }}"
-                class="rounded border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
-            >
-                {{ __('tasks.reset') }}
-            </a>
-        </form>
+        {{ html()->form()->close() }}
 
         <div class="mb-4 flex items-center justify-between gap-4">
 

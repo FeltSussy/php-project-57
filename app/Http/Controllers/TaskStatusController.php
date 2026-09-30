@@ -37,9 +37,13 @@ class TaskStatusController extends Controller
     {
         Gate::authorize('create', TaskStatus::class);
 
-        $data = $request->validate([
-            'name' => 'required|unique:task_statuses|max:20',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|unique:task_statuses|max:20',
+            ],
+            [
+                'name.unique' => __('task_statuses.validation.name_unique'),
+            ]);
 
         $taskStatus = new TaskStatus;
 
@@ -68,9 +72,13 @@ class TaskStatusController extends Controller
     {
         Gate::authorize('update', $taskStatus);
 
-        $data = $request->validate([
-            'name' => "required|unique:task_statuses,name,{$taskStatus->id}|max:20",
-        ]);
+        $data = $request->validate(
+            [
+                'name' => "required|unique:task_statuses,name,{$taskStatus->id}|max:20",
+            ],
+            [
+                'name.unique' => __('task_statuses.validation.name_unique'),
+            ]);
 
         $taskStatus->fill($data);
         $taskStatus->save();
@@ -91,6 +99,7 @@ class TaskStatusController extends Controller
 
         if (! $isAssigned) {
             $taskStatus->delete();
+            flash(__('task_statuses.deleted'))->success();
         } else {
             flash(__('task_statuses.cannot_delete'))->error();
         }
