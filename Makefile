@@ -3,8 +3,8 @@ setup:
 	cp .env.example .env
 	php artisan key:generate
 	php artisan migrate
-	pnpm install
-	pnpm run build
+	npm install
+	npm run build
 
 lint:
 	./vendor/bin/pint
