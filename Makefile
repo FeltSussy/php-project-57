@@ -4,8 +4,6 @@ setup:
 	php artisan key:generate
 	php artisan migrate
 	pnpm install
-
-build:
 	pnpm run build
 
 lint:
