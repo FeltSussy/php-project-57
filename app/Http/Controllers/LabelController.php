@@ -37,10 +37,18 @@ class LabelController extends Controller
     {
         Gate::authorize('create', Label::class);
 
-        $data = $request->validate([
-            'name' => 'required|unique:labels',
-            'description' => 'nullable',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required|unique:labels',
+                'description' => 'nullable',
+            ],
+            [
+                'name.unique' => __('labels.validation.unique')
+            ],
+            [
+                'name' => __('labels.attributes.name'),
+            ]
+    );
 
         $label = new Label;
 

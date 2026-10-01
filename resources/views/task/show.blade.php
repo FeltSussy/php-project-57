@@ -23,14 +23,6 @@
 
                 <p>
                     <span class="font-semibold">
-                        {{ __('tasks.name') }}:
-                    </span>
-
-                    {{ $task->name }}
-                </p>
-
-                <p>
-                    <span class="font-semibold">
                         {{ __('tasks.status') }}:
                     </span>
 
