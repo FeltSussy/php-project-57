@@ -55,7 +55,7 @@ class TaskTest extends TestCase
 
         $task = Task::latest('id')->first();
 
-        $response->assertRedirect(route('tasks.show', $task));
+        $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', [
             'name' => 'Новая задача',

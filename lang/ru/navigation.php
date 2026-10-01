@@ -6,7 +6,7 @@ return [
     'statuses' => 'Статусы',
     'labels' => 'Метки',
     'profile' => 'Профиль',
-    'logout' => 'Выйти',
+    'logout' => 'Выход',
     'login' => 'Вход',
     'register' => 'Регистрация',
     'open_menu' => 'Открыть меню',
