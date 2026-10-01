@@ -37,7 +37,7 @@
 
                 <div class="mt-6">
                     {{ html()
-                        ->submit(__('task_statuses.save'))
+                        ->submit(__('task_statuses.update'))
                         ->class(
                             'rounded bg-blue-500 px-4 py-2 text-sm font-medium ' .
                             'text-white hover:bg-blue-600'

@@ -27,7 +27,7 @@ return [
 
     'boolean' => 'Поле :attribute должно иметь значение true или false.',
     'can' => 'Поле :attribute содержит недопустимое значение.',
-    'confirmed' => 'Подтверждение поля :attribute не совпадает.',
+    'confirmed' => ':attribute и подтверждение не совпадают',
     'contains' => 'В поле :attribute отсутствует обязательное значение.',
     'current_password' => 'Введён неверный пароль.',
     'date' => 'Поле :attribute должно содержать корректную дату.',

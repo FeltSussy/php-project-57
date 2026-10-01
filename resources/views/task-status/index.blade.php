@@ -60,8 +60,15 @@
                                         }}
 
                                         {{
-                                            html()->button(__('task_statuses.delete'), 'submit')
-                                                ->class('text-red-500 hover:text-red-700')
+                                            html()->a(
+                                                route('task_statuses.destroy', $status),
+                                                __('task_statuses.delete')
+                                            )
+                                            ->attribute(
+                                                'onclick',
+                                                "event.preventDefault(); this.closest('form').submit();"
+                                            )
+                                            ->class('text-red-500 hover:text-red-700')
                                         }}
 
                                         {{ html()->form()->close() }}

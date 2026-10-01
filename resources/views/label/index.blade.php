@@ -48,7 +48,12 @@
                             </td>
 
                             <td class="px-4 py-3 text-sm text-gray-900">
-                                {{ $label->name }}
+                                <a
+                                    href="{{ route('labels.show', $label) }}"
+                                    class="text-blue-500 hover:text-blue-700"
+                                >
+                                    {{ $label->name }}
+                                </a>
                             </td>
 
                             <td class="px-4 py-3 text-sm text-gray-500">
@@ -70,8 +75,15 @@
                                     }}
 
                                     {{
-                                        html()->button(__('labels.delete'), 'submit')
-                                            ->class('text-red-500 hover:text-red-700')
+                                        html()->a(
+                                            route('labels.destroy', $label),
+                                            __('labels.delete')
+                                        )
+                                        ->attribute(
+                                            'onclick',
+                                            "event.preventDefault(); this.closest('form').submit();"
+                                        )
+                                        ->class('text-red-500 hover:text-red-700')
                                     }}
 
                                     {{ html()->form()->close() }}

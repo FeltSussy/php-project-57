@@ -170,21 +170,25 @@
                                     @endcan
 
                                     @can('delete', $task)
-                                        <form
-                                            method="POST"
-                                            action="{{ route('tasks.destroy', $task) }}"
-                                            data-confirm="{{ __('tasks.confirm_delete') }}"
-                                        >
-                                            @csrf
-                                            @method('DELETE')
+                                    {{
+                                        html()->form('DELETE', route('tasks.destroy', $task))
+                                            ->attribute('data-confirm', __('tasks.confirm_delete'))
+                                            ->open()
+                                    }}
 
-                                            <button
-                                                type="submit"
-                                                class="text-red-500 hover:text-red-700"
-                                            >
-                                                {{ __('tasks.delete') }}
-                                            </button>
-                                        </form>
+                                    {{
+                                        html()->a(
+                                            route('tasks.destroy', $task),
+                                            __('tasks.delete')
+                                        )
+                                        ->attribute(
+                                            'onclick',
+                                            "event.preventDefault(); this.closest('form').submit();"
+                                        )
+                                        ->class('text-red-500 hover:text-red-700')
+                                    }}
+
+                                    {{ html()->form()->close() }}
                                     @endcan
                                 </div>
                             </td>
