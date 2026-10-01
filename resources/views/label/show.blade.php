@@ -3,7 +3,7 @@
 
         <div class="mb-8 flex items-center gap-4">
             <h1 class="text-4xl font-normal text-gray-900">
-                {{ __('labels.show') }}: {{ $label->name }}
+                {{ __('labels.show') }}
             </h1>
 
             @can('update', $label)

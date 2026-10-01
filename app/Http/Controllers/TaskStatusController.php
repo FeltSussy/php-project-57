@@ -39,7 +39,7 @@ class TaskStatusController extends Controller
 
         $data = $request->validate(
             [
-                'name' => 'required|unique:task_statuses|max:20',
+                'name' => 'required|unique:task_statuses',
             ],
             [
                 'name.unique' => __('task_statuses.validation.name_unique'),
@@ -74,7 +74,7 @@ class TaskStatusController extends Controller
 
         $data = $request->validate(
             [
-                'name' => "required|unique:task_statuses,name,{$taskStatus->id}|max:20",
+                'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
             ],
             [
                 'name.unique' => __('task_statuses.validation.name_unique'),
