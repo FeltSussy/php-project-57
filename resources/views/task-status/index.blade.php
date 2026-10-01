@@ -53,26 +53,27 @@
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex gap-4">
                                     @can('delete', $status)
-                                    {{
-                                        html()->form('DELETE', route('task_statuses.destroy', $status))
-                                            ->attribute('data-confirm', __('task_statuses.confirm_delete'))
-                                            ->open()
-                                    }}
+                                        {{
+                                            html()->form('DELETE', route('task_statuses.destroy', $status))
+                                                ->attribute('data-confirm', __('task_statuses.confirm_delete'))
+                                                ->open()
+                                        }}
 
-                                    {{
-                                        html()->button(__('task_statuses.delete'), 'submit')
-                                            ->class('text-red-500 hover:text-red-700')
-                                    }}
+                                        {{
+                                            html()->button(__('task_statuses.delete'), 'submit')
+                                                ->class('text-red-500 hover:text-red-700')
+                                        }}
 
-                                    {{ html()->form()->close() }}
+                                        {{ html()->form()->close() }}
                                     @endcan
+
                                     @can('update', $status)
-                                    {{ html()->form('GET', route('task_statuses.edit', $status))->open() }}
-
-                                        {{ html()->button(__('task_statuses.edit'), 'submit')
-                                            ->class('text-blue-500 hover:text-blue-700') }}
-
-                                    {{ html()->form()->close() }}
+                                        {{
+                                            html()->a(
+                                                route('task_statuses.edit', $status),
+                                                __('task_statuses.edit')
+                                            )->class('text-blue-500 hover:text-blue-700')
+                                        }}
                                     @endcan
                                 </div>
                             </td>

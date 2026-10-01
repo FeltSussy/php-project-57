@@ -180,15 +180,17 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'password' => [
+            'min' => ':attribute должен иметь длину не менее :min символов.',
+        ],
     ],
 
     'attributes' => [
         'name' => 'имя',
         'email' => 'электронная почта',
-        'password' => 'пароль',
+        'password' => 'Пароль',
         'password_confirmation' => 'подтверждение пароля',
         'current_password' => 'текущий пароль',
         'status_id' => 'статус',
     ],
-
 ];
