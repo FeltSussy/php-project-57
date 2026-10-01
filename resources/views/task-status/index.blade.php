@@ -53,29 +53,26 @@
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex gap-4">
                                     @can('delete', $status)
-                                    <form
-                                        method="POST"
-                                        action="{{ route('task_statuses.destroy', $status) }}"
-                                        data-confirm="{{ __('task_statuses.confirm_delete') }}"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
+                                    {{
+                                        html()->form('DELETE', route('task_statuses.destroy', $status))
+                                            ->attribute('data-confirm', __('task_statuses.confirm_delete'))
+                                            ->open()
+                                    }}
 
-                                        <button
-                                            type="submit"
-                                            class="text-red-500 hover:text-red-700"
-                                        >
-                                            {{ __('task_statuses.delete') }}
-                                        </button>
-                                    </form>
+                                    {{
+                                        html()->button(__('task_statuses.delete'), 'submit')
+                                            ->class('text-red-500 hover:text-red-700')
+                                    }}
+
+                                    {{ html()->form()->close() }}
                                     @endcan
                                     @can('update', $status)
-                                    <a
-                                        href="{{ route('task_statuses.edit', $status) }}"
-                                        class="text-blue-500 hover:text-blue-700"
-                                    >
-                                        {{ __('task_statuses.edit') }}
-                                    </a>
+                                    {{ html()->form('GET', route('task_statuses.edit', $status))->open() }}
+
+                                        {{ html()->button(__('task_statuses.edit'), 'submit')
+                                            ->class('text-blue-500 hover:text-blue-700') }}
+
+                                    {{ html()->form()->close() }}
                                     @endcan
                                 </div>
                             </td>

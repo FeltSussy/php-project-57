@@ -63,21 +63,18 @@
                                 <div class="flex gap-4">
 
                                     @can('delete', $label)
-                                        <form
-                                            method="POST"
-                                            action="{{ route('labels.destroy', $label) }}"
-                                            data-confirm="{{ __('labels.confirm_delete') }}"
-                                        >
-                                            @csrf
-                                            @method('DELETE')
+                                    {{
+                                        html()->form('DELETE', route('labels.destroy', $label))
+                                            ->attribute('data-confirm', __('labels.confirm_delete'))
+                                            ->open()
+                                    }}
 
-                                            <button
-                                                type="submit"
-                                                class="text-red-500 hover:text-red-700"
-                                            >
-                                                {{ __('labels.delete') }}
-                                            </button>
-                                        </form>
+                                    {{
+                                        html()->button(__('labels.delete'), 'submit')
+                                            ->class('text-red-500 hover:text-red-700')
+                                    }}
+
+                                    {{ html()->form()->close() }}
                                     @endcan
 
                                     @can('update', $label)

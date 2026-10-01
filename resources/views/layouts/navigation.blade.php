@@ -40,12 +40,13 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <button
-                            type="submit"
+                        <a
+                            href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); this.closest('form').submit();"
                             class="rounded px-3 py-2 text-gray-600 transition hover:bg-gray-50 hover:text-gray-900"
                         >
                             {{ __('navigation.logout') }}
-                        </button>
+                        </a>
                     </form>
                 @else
                     <a
