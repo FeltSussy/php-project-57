@@ -3,7 +3,7 @@
 
         <div class="mb-8 flex items-center gap-3">
             <h1 class="text-4xl font-normal text-gray-900">
-                {{ __('tasks.show') }}
+                {{ __('tasks.show') }}: {{ $task->name }}
             </h1>
 
             @can('update', $task)
