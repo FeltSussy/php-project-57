@@ -8,3 +8,9 @@ setup:
 
 lint:
 	./vendor/bin/pint
+
+coverage:
+	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-clover=storage/logs/clover.xml
+
+phpstan:
+	./vendor/bin/phpstan analyse --verbose
