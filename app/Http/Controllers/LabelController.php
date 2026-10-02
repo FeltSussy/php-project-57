@@ -43,12 +43,12 @@ class LabelController extends Controller
                 'description' => 'nullable',
             ],
             [
-                'name.unique' => __('labels.validation.unique')
+                'name.unique' => __('labels.validation.unique'),
             ],
             [
                 'name' => __('labels.attributes.name'),
             ]
-    );
+        );
 
         $label = new Label;
 

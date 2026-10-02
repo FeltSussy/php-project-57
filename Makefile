@@ -6,6 +6,9 @@ setup:
 	npm install
 	npm run build
 
+test:
+	php artisan test
+
 lint:
 	./vendor/bin/pint
 
