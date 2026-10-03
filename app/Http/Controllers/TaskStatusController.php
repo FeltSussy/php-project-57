@@ -77,7 +77,7 @@ class TaskStatusController extends Controller
     {
         Gate::authorize('delete', $taskStatus);
 
-        if (! $isAssigned = $taskStatus->tasks()->exists()) {
+        if (! $taskStatus->tasks()->exists()) {
             $taskStatus->delete();
             flash(__('task_statuses.deleted'))->success();
         } else {
