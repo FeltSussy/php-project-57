@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,8 +29,6 @@ class LabelController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Label::class);
-
         $label = new Label;
 
         return view('label.create', compact('label'));
@@ -36,8 +39,6 @@ class LabelController extends Controller
      */
     public function store(StoreLabelRequest $request)
     {
-        Gate::authorize('create', Label::class);
-
         $label = Label::create($request->validated());
 
         flash(__('labels.created'))->success();
@@ -58,8 +59,6 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        Gate::authorize('update', $label);
-
         return view('label.edit', compact('label'));
     }
 
@@ -68,8 +67,6 @@ class LabelController extends Controller
      */
     public function update(UpdateLabelRequest $request, Label $label)
     {
-        Gate::authorize('update', $label);
-
         $label->update($request->validated());
 
         flash(__('labels.updated'))->success();
@@ -82,8 +79,6 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        Gate::authorize('delete', $label);
-
         if (! $label->tasks()->exists()) {
             $label->delete();
             flash(__('labels.deleted'))->success();

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class, 'task_status');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,8 +30,6 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', TaskStatus::class);
-
         $taskStatus = new TaskStatus;
 
         return view('task-status.create', compact('taskStatus'));
@@ -37,8 +40,6 @@ class TaskStatusController extends Controller
      */
     public function store(StoreTaskStatusRequest $request)
     {
-        Gate::authorize('create', TaskStatus::class);
-
         TaskStatus::create($request->validated());
 
         flash(__('task_statuses.created'))->success();
@@ -51,8 +52,6 @@ class TaskStatusController extends Controller
      */
     public function edit(Request $request, TaskStatus $taskStatus)
     {
-        Gate::authorize('update', $taskStatus);
-
         return view('task-status.edit', compact('taskStatus'));
     }
 
@@ -61,8 +60,6 @@ class TaskStatusController extends Controller
      */
     public function update(UpdateTaskStatusRequest $request, TaskStatus $taskStatus)
     {
-        Gate::authorize('update', $taskStatus);
-
         $taskStatus->update($request->validated());
 
         flash(__('task_statuses.updated'))->success();
@@ -75,8 +72,6 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        Gate::authorize('delete', $taskStatus);
-
         if (! $taskStatus->tasks()->exists()) {
             $taskStatus->delete();
             flash(__('task_statuses.deleted'))->success();
