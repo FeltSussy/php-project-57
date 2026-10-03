@@ -20,4 +20,10 @@ return [
     'cannot_delete' => 'Failed to delete the label',
     'deleted' => 'Label deleted successfully',
     'updated' => 'Label updated successfully',
+    'attributes' => [
+        'name' => 'name',
+    ],
+    'validation' => [
+        'unique' => 'The :attribute has already been taken.',
+    ],
 ];

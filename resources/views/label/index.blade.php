@@ -68,25 +68,28 @@
                                 <div class="flex gap-4">
 
                                     @can('delete', $label)
-                                    {{
-                                        html()->form('DELETE', route('labels.destroy', $label))
-                                            ->attribute('data-confirm', __('labels.confirm_delete'))
-                                            ->open()
-                                    }}
+                                        {{
+                                            html()->form('DELETE', route('labels.destroy', $label))
+                                                ->attribute(
+                                                    'onsubmit',
+                                                    'return confirm(' . Js::from(__('labels.confirm_delete')) . ')'
+                                                )
+                                                ->open()
+                                        }}
 
-                                    {{
-                                        html()->a(
-                                            route('labels.destroy', $label),
-                                            __('labels.delete')
-                                        )
-                                        ->attribute(
-                                            'onclick',
-                                            "event.preventDefault(); this.closest('form').submit();"
-                                        )
-                                        ->class('text-red-500 hover:text-red-700')
-                                    }}
+                                        {{
+                                            html()->a(
+                                                route('labels.destroy', $label),
+                                                __('labels.delete')
+                                            )
+                                            ->attribute(
+                                                'onclick',
+                                                "event.preventDefault(); this.closest('form').requestSubmit();"
+                                            )
+                                            ->class('text-red-500 hover:text-red-700')
+                                        }}
 
-                                    {{ html()->form()->close() }}
+                                        {{ html()->form()->close() }}
                                     @endcan
 
                                     @can('update', $label)

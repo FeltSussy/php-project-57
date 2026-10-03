@@ -55,7 +55,10 @@
                                     @can('delete', $status)
                                         {{
                                             html()->form('DELETE', route('task_statuses.destroy', $status))
-                                                ->attribute('data-confirm', __('task_statuses.confirm_delete'))
+                                                ->attribute(
+                                                    'onsubmit',
+                                                    'return confirm(' . Js::from(__('task_statuses.confirm_delete')) . ')'
+                                                )
                                                 ->open()
                                         }}
 
@@ -66,7 +69,7 @@
                                             )
                                             ->attribute(
                                                 'onclick',
-                                                "event.preventDefault(); this.closest('form').submit();"
+                                                "event.preventDefault(); this.closest('form').requestSubmit();"
                                             )
                                             ->class('text-red-500 hover:text-red-700')
                                         }}

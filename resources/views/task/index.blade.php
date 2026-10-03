@@ -51,19 +51,6 @@
         }}
 
         {{ html()
-            ->select(
-                'filter[labels.id]',
-                $labels->pluck('name', 'id'),
-                request('filter')['labels.id'] ?? null
-            )
-            ->placeholder(__('tasks.label'))
-            ->class(
-                'w-52 rounded-md border-gray-300 text-sm shadow-sm ' .
-                'focus:border-blue-500 focus:ring-blue-500'
-            )
-        }}
-
-        {{ html()
             ->submit(__('tasks.apply'))
             ->class(
                 'rounded bg-blue-500 px-4 py-2 text-sm font-medium ' .
@@ -147,11 +134,11 @@
                             </td>
 
                             <td class="px-4 py-3 text-sm text-gray-600">
-                                {{ $task->creator->name }}
+                                {{ $task->createdBy->name }}
                             </td>
 
                             <td class="px-4 py-3 text-sm text-gray-600">
-                                {{ $task->assignee?->name }}
+                                {{ $task->assignedTo?->name }}
                             </td>
 
                             <td class="px-4 py-3 text-sm text-gray-500">
@@ -170,25 +157,28 @@
                                     @endcan
 
                                     @can('delete', $task)
-                                    {{
-                                        html()->form('DELETE', route('tasks.destroy', $task))
-                                            ->attribute('data-confirm', __('tasks.confirm_delete'))
-                                            ->open()
-                                    }}
+                                        {{
+                                            html()->form('DELETE', route('tasks.destroy', $task))
+                                                ->attribute(
+                                                    'onsubmit',
+                                                    'return confirm(' . Js::from(__('tasks.confirm_delete')) . ')'
+                                                )
+                                                ->open()
+                                        }}
 
-                                    {{
-                                        html()->a(
-                                            route('tasks.destroy', $task),
-                                            __('tasks.delete')
-                                        )
-                                        ->attribute(
-                                            'onclick',
-                                            "event.preventDefault(); this.closest('form').submit();"
-                                        )
-                                        ->class('text-red-500 hover:text-red-700')
-                                    }}
+                                        {{
+                                            html()->a(
+                                                route('tasks.destroy', $task),
+                                                __('tasks.delete')
+                                            )
+                                            ->attribute(
+                                                'onclick',
+                                                "event.preventDefault(); this.closest('form').requestSubmit();"
+                                            )
+                                            ->class('text-red-500 hover:text-red-700')
+                                        }}
 
-                                    {{ html()->form()->close() }}
+                                        {{ html()->form()->close() }}
                                     @endcan
                                 </div>
                             </td>

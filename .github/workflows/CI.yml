@@ -28,11 +28,11 @@ jobs:
       - name: Linter
         run: make lint
 
-      - name: Seeding
-        run: php artisan db:seed
+      - name: Phpstan
+        run: make phpstan
 
-      - name: Feature tests
-        run: php artisan test
+      - name: Tests
+        run: make test
 
       - name: Coverage
         run: make coverage

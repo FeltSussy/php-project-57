@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +29,11 @@ class TaskController extends Controller
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id'),
-                AllowedFilter::exact('labels.id'),
+            )
+            ->with(
+                'status',
+                'createdBy',
+                'assignedTo',
             )
             ->paginate()
             ->withQueryString();
@@ -46,8 +55,6 @@ class TaskController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create', Task::class);
-
         $task = new Task;
         $taskStatuses = TaskStatus::all();
         $users = User::all();
@@ -64,27 +71,15 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        Gate::authorize('create', Task::class);
+        $task = $request->user()->createdTasks()->create(
+            $request->safe()->except('labels')
+        );
 
-        $data = $request->validate([
-            'name' => 'required',
-            'status_id' => 'required',
-            'description' => 'nullable',
-            'assigned_to_id' => 'nullable',
-        ]);
-
-        $task = new Task;
-        $creatorId = Auth::id();
-        $task->created_by_id = $creatorId;
-
-        $task->fill($data);
-        $task->save();
-
-        if ($labels = $request->input('labels')) {
-            $task->labels()->sync($labels);
-        }
+        $task->labels()->sync(
+            $request->validated('labels', [])
+        );
 
         flash(__('tasks.created'))->success();
 
@@ -104,8 +99,6 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        Gate::authorize('update', $task);
-
         $taskStatuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
@@ -123,23 +116,15 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        Gate::authorize('update', $task);
+        $task->update(
+            $request->safe()->except('labels')
+        );
 
-        $data = $request->validate([
-            'name' => 'required',
-            'status_id' => 'required',
-            'description' => 'nullable',
-            'assigned_to_id' => 'nullable',
-        ]);
-
-        $labels = $request->input('labels');
-
-        $task->fill($data);
-        $task->save();
-
-        $task->labels()->sync($labels);
+        $task->labels()->sync(
+            $request->validated('labels', [])
+        );
 
         flash(__('tasks.updated'))->success();
 
@@ -151,8 +136,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        Gate::authorize('delete', $task);
-
         $task->delete();
 
         flash(__('tasks.deleted'))->success();

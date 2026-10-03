@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLabelRequest;
+use App\Http\Requests\UpdateLabelRequest;
 use App\Models\Label;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
@@ -33,27 +34,11 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLabelRequest $request)
     {
         Gate::authorize('create', Label::class);
 
-        $data = $request->validate(
-            [
-                'name' => 'required|unique:labels',
-                'description' => 'nullable',
-            ],
-            [
-                'name.unique' => __('labels.validation.unique'),
-            ],
-            [
-                'name' => __('labels.attributes.name'),
-            ]
-        );
-
-        $label = new Label;
-
-        $label->fill($data);
-        $label->save();
+        $label = Label::create($request->validated());
 
         flash(__('labels.created'))->success();
 
@@ -81,17 +66,11 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Label $label)
+    public function update(UpdateLabelRequest $request, Label $label)
     {
         Gate::authorize('update', $label);
 
-        $data = $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
-        ]);
-
-        $label->fill($data);
-        $label->save();
+        $label->update($request->validated());
 
         flash(__('labels.updated'))->success();
 
@@ -105,9 +84,7 @@ class LabelController extends Controller
     {
         Gate::authorize('delete', $label);
 
-        $isAssigned = $label->tasks()->exists();
-
-        if (! $isAssigned) {
+        if (! $label->tasks()->exists()) {
             $label->delete();
             flash(__('labels.deleted'))->success();
         } else {

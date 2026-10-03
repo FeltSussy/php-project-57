@@ -27,11 +27,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Тестовая задача';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $user->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Тестовая задача',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $user->id,
+        ]);
 
         $response = $this->get(route('tasks.show', $task));
 
@@ -53,8 +53,6 @@ class TaskTest extends TestCase
                 'description' => 'Описание задачи',
             ]);
 
-        $task = Task::latest('id')->first();
-
         $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', [
@@ -73,11 +71,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Старое имя';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $creator->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Старое имя',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $creator->id,
+        ]);
 
         $response = $this->actingAs($user)
             ->patch(route('tasks.update', $task), [
@@ -101,11 +99,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Задача для удаления';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $creator->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Задача для удаления',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $creator->id,
+        ]);
 
         $response = $this->actingAs($creator)
             ->delete(route('tasks.destroy', $task));
@@ -126,11 +124,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Чужая задача';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $creator->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Чужая задача',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $creator->id,
+        ]);
 
         $response = $this->actingAs($anotherUser)
             ->delete(route('tasks.destroy', $task));
@@ -168,11 +166,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Старое имя';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $creator->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Старое имя',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $creator->id,
+        ]);
 
         $response = $this->patch(
             route('tasks.update', $task),
@@ -198,11 +196,11 @@ class TaskTest extends TestCase
             'name' => 'Новый',
         ]);
 
-        $task = new Task;
-        $task->name = 'Задача для удаления';
-        $task->status_id = $taskStatus->id;
-        $task->created_by_id = $creator->id;
-        $task->save();
+        $task = Task::factory()->create([
+            'name' => 'Задача для удаления',
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $creator->id,
+        ]);
 
         $response = $this->delete(
             route('tasks.destroy', $task)

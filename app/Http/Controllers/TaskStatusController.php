@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskStatusRequest;
+use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -33,22 +35,11 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskStatusRequest $request)
     {
         Gate::authorize('create', TaskStatus::class);
 
-        $data = $request->validate(
-            [
-                'name' => 'required|unique:task_statuses',
-            ],
-            [
-                'name.unique' => __('task_statuses.validation.name_unique'),
-            ]);
-
-        $taskStatus = new TaskStatus;
-
-        $taskStatus->fill($data);
-        $taskStatus->save();
+        TaskStatus::create($request->validated());
 
         flash(__('task_statuses.created'))->success();
 
@@ -68,20 +59,11 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(UpdateTaskStatusRequest $request, TaskStatus $taskStatus)
     {
         Gate::authorize('update', $taskStatus);
 
-        $data = $request->validate(
-            [
-                'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
-            ],
-            [
-                'name.unique' => __('task_statuses.validation.name_unique'),
-            ]);
-
-        $taskStatus->fill($data);
-        $taskStatus->save();
+        $taskStatus->update($request->validated());
 
         flash(__('task_statuses.updated'))->success();
 
@@ -95,9 +77,7 @@ class TaskStatusController extends Controller
     {
         Gate::authorize('delete', $taskStatus);
 
-        $isAssigned = $taskStatus->tasks()->exists();
-
-        if (! $isAssigned) {
+        if (! $isAssigned = $taskStatus->tasks()->exists()) {
             $taskStatus->delete();
             flash(__('task_statuses.deleted'))->success();
         } else {
