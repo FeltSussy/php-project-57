@@ -6,7 +6,6 @@ use App\Http\Requests\StoreTaskStatusRequest;
 use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {

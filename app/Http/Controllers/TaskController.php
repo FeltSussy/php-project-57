@@ -102,7 +102,10 @@ class TaskController extends Controller
         $taskStatuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
-        $selectedLabels = $task->labels->pluck('id')->all();
+        $assignedLabels = $task->labels->pluck('id')->all();
+        $selectedLabels = session()->hasOldInput()
+            ? old('labels', [])
+            : $assignedLabels;
 
         return view('task.edit', [
             'task' => $task,
@@ -110,6 +113,7 @@ class TaskController extends Controller
             'users' => $users,
             'labels' => $labels,
             'selectedLabels' => $selectedLabels,
+            'assignedLabels' => $assignedLabels,
         ]);
     }
 

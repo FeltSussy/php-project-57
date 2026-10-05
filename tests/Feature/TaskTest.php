@@ -21,17 +21,7 @@ class TaskTest extends TestCase
 
     public function test_show_a_task(): void
     {
-        $user = User::factory()->create();
-
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
-
-        $task = Task::factory()->create([
-            'name' => 'Тестовая задача',
-            'status_id' => $taskStatus->id,
-            'created_by_id' => $user->id,
-        ]);
+        $task = Task::factory()->create();
 
         $response = $this->get(route('tasks.show', $task));
 
@@ -42,9 +32,7 @@ class TaskTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->actingAs($user)
             ->post(route('tasks.store'), [
@@ -64,18 +52,11 @@ class TaskTest extends TestCase
 
     public function test_update_a_task_as_a_user(): void
     {
-        $creator = User::factory()->create();
         $user = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
-        $task = Task::factory()->create([
-            'name' => 'Старое имя',
-            'status_id' => $taskStatus->id,
-            'created_by_id' => $creator->id,
-        ]);
+        $task = Task::factory()->create();
 
         $response = $this->actingAs($user)
             ->patch(route('tasks.update', $task), [
@@ -88,6 +69,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
             'name' => 'Новое имя',
+            'status_id' => $taskStatus->id,
         ]);
     }
 
@@ -95,13 +77,7 @@ class TaskTest extends TestCase
     {
         $creator = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
-
         $task = Task::factory()->create([
-            'name' => 'Задача для удаления',
-            'status_id' => $taskStatus->id,
             'created_by_id' => $creator->id,
         ]);
 
@@ -120,13 +96,7 @@ class TaskTest extends TestCase
         $creator = User::factory()->create();
         $anotherUser = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
-
         $task = Task::factory()->create([
-            'name' => 'Чужая задача',
-            'status_id' => $taskStatus->id,
             'created_by_id' => $creator->id,
         ]);
 
@@ -142,9 +112,7 @@ class TaskTest extends TestCase
 
     public function test_guest_cannot_create_a_task(): void
     {
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->post(route('tasks.store'), [
             'name' => 'Новая задача',
@@ -160,17 +128,9 @@ class TaskTest extends TestCase
 
     public function test_guest_cannot_update_a_task(): void
     {
-        $creator = User::factory()->create();
+        $taskStatus = TaskStatus::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
-
-        $task = Task::factory()->create([
-            'name' => 'Старое имя',
-            'status_id' => $taskStatus->id,
-            'created_by_id' => $creator->id,
-        ]);
+        $task = Task::factory()->create();
 
         $response = $this->patch(
             route('tasks.update', $task),
@@ -184,23 +144,13 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
-            'name' => 'Старое имя',
+            'name' => $task->name,
         ]);
     }
 
     public function test_guest_cannot_delete_a_task(): void
     {
-        $creator = User::factory()->create();
-
-        $taskStatus = TaskStatus::create([
-            'name' => 'Новый',
-        ]);
-
-        $task = Task::factory()->create([
-            'name' => 'Задача для удаления',
-            'status_id' => $taskStatus->id,
-            'created_by_id' => $creator->id,
-        ]);
+        $task = Task::factory()->create();
 
         $response = $this->delete(
             route('tasks.destroy', $task)

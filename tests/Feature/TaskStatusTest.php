@@ -38,9 +38,7 @@ class TaskStatusTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Старое имя',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->actingAs($user)
             ->patch(route('task_statuses.update', $taskStatus), [
@@ -59,9 +57,7 @@ class TaskStatusTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $taskStatus = TaskStatus::create([
-            'name' => 'Статус для удаления',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->actingAs($user)
             ->delete(route('task_statuses.destroy', $taskStatus));
@@ -88,9 +84,7 @@ class TaskStatusTest extends TestCase
 
     public function test_guest_cannot_update_a_task_status(): void
     {
-        $taskStatus = TaskStatus::create([
-            'name' => 'Старое имя',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->patch(
             route('task_statuses.update', $taskStatus),
@@ -103,15 +97,13 @@ class TaskStatusTest extends TestCase
 
         $this->assertDatabaseHas('task_statuses', [
             'id' => $taskStatus->id,
-            'name' => 'Старое имя',
+            'name' => $taskStatus->name,
         ]);
     }
 
     public function test_guest_cannot_delete_a_task_status(): void
     {
-        $taskStatus = TaskStatus::create([
-            'name' => 'Статус для удаления',
-        ]);
+        $taskStatus = TaskStatus::factory()->create();
 
         $response = $this->delete(
             route('task_statuses.destroy', $taskStatus)

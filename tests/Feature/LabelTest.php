@@ -42,10 +42,7 @@ class LabelTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $label = Label::create([
-            'name' => 'Старое имя',
-            'description' => 'Старое описание',
-        ]);
+        $label = Label::factory()->create();
 
         $response = $this->actingAs($user)
             ->patch(route('labels.update', $label), [
@@ -66,10 +63,7 @@ class LabelTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $label = Label::create([
-            'name' => 'Метка для удаления',
-            'description' => 'Описание',
-        ]);
+        $label = Label::factory()->create();
 
         $response = $this->actingAs($user)
             ->delete(route('labels.destroy', $label));
@@ -97,10 +91,7 @@ class LabelTest extends TestCase
 
     public function test_guest_cannot_update_a_label(): void
     {
-        $label = Label::create([
-            'name' => 'Старое имя',
-            'description' => 'Старое описание',
-        ]);
+        $label = Label::factory()->create();
 
         $response = $this->patch(
             route('labels.update', $label),
@@ -114,16 +105,13 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseHas('labels', [
             'id' => $label->id,
-            'name' => 'Старое имя',
+            'name' => $label->name,
         ]);
     }
 
     public function test_guest_cannot_delete_a_label(): void
     {
-        $label = Label::create([
-            'name' => 'Метка для удаления',
-            'description' => 'Описание',
-        ]);
+        $label = Label::factory()->create();
 
         $response = $this->delete(
             route('labels.destroy', $label)

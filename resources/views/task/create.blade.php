@@ -132,8 +132,6 @@
                         multiple
                         class="block min-h-32 w-full rounded-md border-gray-300 bg-white shadow-sm"
                     >
-                        <option value=""></option>
-
                         @foreach ($labels as $label)
                             <option
                                 value="{{ $label->id }}"
