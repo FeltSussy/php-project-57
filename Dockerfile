@@ -12,14 +12,13 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 RUN curl -sL https://deb.nodesource.com/setup_26.x | bash -
 RUN apt-get install -y nodejs
-RUN npm install --global pnpm@11
 
 WORKDIR /app
 
 COPY . .
 RUN composer install
-RUN pnpm install --frozen-lockfile
-RUN pnpm run build
+RUN npm ci
+RUN npm run build
 
 RUN > database/database.sqlite
 
