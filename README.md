@@ -32,7 +32,7 @@ Users can create and manage tasks, task statuses, and labels. Tasks can be assig
 
 ## Requirements
 
-- PHP
+- PHP ^8.4
 - Composer
 - Node.js
 - npm
